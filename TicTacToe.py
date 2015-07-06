@@ -41,8 +41,15 @@ def printboard(turn, board, aiturn):
 
 
 # Prompts the player to move
+# I added some stuff that makes sure the input is legit. Thanks to Github user Kaligule for opening an issue.
 def playermove(turn, board, aiturn):
     choice = raw_input("Enter a number 0-8: ")
+    if choice.isdigit() == False:
+        print "Keep it an integer, buddy."
+        playermove(turn, board, aiturn)
+    if int(choice) > 8 or int(choice) < 0:
+        print "Make that a number between 0 and 8."
+        playermove(turn, board, aiturn)
     if board[int(choice)] == 'X' or board[int(choice)] == 'O':
         print "That's already taken! Try again."
         playermove(turn, board, aiturn)
