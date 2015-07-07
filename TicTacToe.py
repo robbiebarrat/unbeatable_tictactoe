@@ -100,20 +100,23 @@ def aimove(turn, board, aiturn, corners):
                 alreadymoved = True
                 break
 
-            # Defensive
-            if board[x[0]] == "O" and board[x[1]] == "O" and board[x[2]] != "X":
-                board[x[2]] = "X"
-                alreadymoved = True
-                break
-            if board[x[1]] == "O" and board[x[2]] == "O" and board[x[0]] != "X":
-                board[x[0]] = "X"
-                alreadymoved = True
-                break
-            if board[x[0]] == "O" and board[x[2]] == "O" and board[x[1]] != "X":
-                board[x[1]] = "X"
-                alreadymoved = True
-                break
-
+    # Tweaked it here a little bit, thanks to reddit user mdond for letting me know. It defending items closer to the
+    # start of the list 'completes' before it would play offensive with items later in 'completes'.
+        for x in completes:
+            if alreadymoved == False:
+                # Defensive
+                if board[x[0]] == "O" and board[x[1]] == "O" and board[x[2]] != "X":
+                    board[x[2]] = "X"
+                    alreadymoved = True
+                    break
+                if board[x[1]] == "O" and board[x[2]] == "O" and board[x[0]] != "X":
+                    board[x[0]] = "X"
+                    alreadymoved = True
+                    break
+                if board[x[0]] == "O" and board[x[2]] == "O" and board[x[1]] != "X":
+                    board[x[1]] = "X"
+                    alreadymoved = True
+                    break
     # If none of the above has worked and it isn't during the first few turns, it chooses a random 'side' space to
     # fill (this rarely happens). If it is during the AI's 2nd turn, it chooses a corner piece because of this flaw:
     # Turn 1
