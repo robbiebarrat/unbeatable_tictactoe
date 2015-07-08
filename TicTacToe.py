@@ -44,6 +44,9 @@ def printboard(turn, board, aiturn):
 # I added some stuff that makes sure the input is legit. Thanks to Github user Kaligule for opening an issue.
 def playermove(turn, board, aiturn):
     choice = raw_input("Enter a number 0-8: ")
+    if not choice:
+        print "Hey pal, you need to enter something..."
+        playermove(turn, board, aiturn)
     if choice.isdigit() == False:
         print "Keep it an integer, buddy."
         playermove(turn, board, aiturn)
