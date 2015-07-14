@@ -96,7 +96,6 @@ def aimove(turn, board, aiturn, corners):
                 break
             if board[x[0]] == "X" and board[x[2]] == "X" and board[x[1]] != "O":
                 board[x[1]] = "X"
-                print "WHAT"
                 alreadymoved = True
                 break
     # Tweaked it here a little bit, thanks to reddit user mdond for letting me know. It defending items closer to the
@@ -158,7 +157,7 @@ def aimove(turn, board, aiturn, corners):
             for i in sides:
                 if board[i] == "O":
                     humansides += 1
-            if humansides == 2:
+            if humansides >= 1:
                 cornerchoice(corners, board, alreadymoved)
             else:
 
