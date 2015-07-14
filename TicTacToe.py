@@ -44,9 +44,6 @@ def printboard(turn, board, aiturn):
 # I added some stuff that makes sure the input is legit. Thanks to Github user Kaligule for opening an issue.
 def playermove(turn, board, aiturn):
     choice = raw_input("Enter a number 0-8: ")
-    if not choice:
-        print "Hey pal, you need to enter something..."
-        playermove(turn, board, aiturn)
     if choice.isdigit() == False:
         print "Keep it an integer, buddy."
         playermove(turn, board, aiturn)
@@ -88,7 +85,6 @@ def aimove(turn, board, aiturn, corners):
     # Checks to see if there are any possible ways for the game to end next turn, and takes proper action.
     else:
         for x in completes:
-
             # Offensive
             if board[x[0]] == "X" and board[x[1]] == "X" and board[x[2]] != "O":
                 board[x[2]] = "X"
@@ -100,11 +96,11 @@ def aimove(turn, board, aiturn, corners):
                 break
             if board[x[0]] == "X" and board[x[2]] == "X" and board[x[1]] != "O":
                 board[x[1]] = "X"
+                print "WHAT"
                 alreadymoved = True
                 break
-
     # Tweaked it here a little bit, thanks to reddit user mdond for letting me know. It defending items closer to the
-    # start of the list 'completes' before it would play offensive with items later in 'completes'.
+    # start of the list 'pairs' before it would play offensive with items later in 'pairs'.
         for x in completes:
             if alreadymoved == False:
                 # Defensive
@@ -120,6 +116,7 @@ def aimove(turn, board, aiturn, corners):
                     board[x[1]] = "X"
                     alreadymoved = True
                     break
+
     # If none of the above has worked and it isn't during the first few turns, it chooses a random 'side' space to
     # fill (this rarely happens). If it is during the AI's 2nd turn, it chooses a corner piece because of this flaw:
     # Turn 1
@@ -157,14 +154,23 @@ def aimove(turn, board, aiturn, corners):
             cornerchoice(corners, board, alreadymoved)
         else:
             sides = [1, 3, 5, 7]
-            goodchoices = []
+            humansides = 0
             for i in sides:
-                if board[i] == " " or board[i] == "_":
-                    goodchoices.append(i)
-            if goodchoices == []:
+                if board[i] == "O":
+                    humansides += 1
+            if humansides == 2:
                 cornerchoice(corners, board, alreadymoved)
             else:
-                board[random.choice(goodchoices)] = "X"
+
+                goodchoices = []
+                for i in sides:
+                    if board[i] == " " or board[i] == "_":
+                        goodchoices.append(i)
+                if goodchoices == []:
+                    cornerchoice(corners, board, alreadymoved)
+                else:
+                    board[random.choice(goodchoices)] = "X"
+
     turn = "PLAYER"
     checkforwin(turn, board, aiturn)
 
